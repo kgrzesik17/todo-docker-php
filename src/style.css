@@ -29,12 +29,6 @@ main {
   align-items: center;
 }
 
-#tasks-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
 #add-task-form {
   display: flex;
   flex-direction: row;
@@ -45,29 +39,86 @@ main {
 #add-task-form input {
   font-family: inherit;
   font-size: 1.5rem;
-  border: 3px solid var(--primary-color);
+  border: 1px solid var(--primary-color);
   border-radius: 5px;
   background-color: var(--bg-color);
   color: var(--primary-color);
 }
 
-#add-task-form button {
+#add-task-form button,
+.task button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-family: inherit;
   font-size: 1.5rem;
   height: 2.2rem;
   width: 2.2rem;
   background-color: var(--bg-color);
-  border: 3px solid var(--primary-color);
+  border: 1px solid var(--primary-color);
   border-radius: 5px;
   color: var(--primary-color);
 }
 
-#add-task-form button:hover {
+#add-task-form button:hover,
+.task button:hover {
   cursor: pointer;
   background-color: #3b54cc;
 }
 
-#add-task-form button:active {
+#add-task-form button:active,
+.task button:active {
   cursor: pointer;
   background-color: #7585d5;
+}
+
+.tasks {
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+  align-items: center;
+  margin: 2rem 0;
+}
+
+.task {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  border-radius: 8px;
+  padding: 0 1rem;
+}
+
+h2 {
+  color: var(--primary-color);
+}
+
+.tasks-done {
+  color: rgb(114, 114, 114);
+}
+
+.tasks-done button,
+.tasks-done .task {
+  border-color: rgb(114, 114, 114);
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  padding: 1rem 0;
+}
+
+footer a {
+  font-size: 1.2rem;
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: #aaaaaa;
 }
