@@ -1,0 +1,13 @@
+name: "Todo Checker"
+description: "Check for TODO comments in PHP files"
+runs:
+  using: "composite"
+  steps:
+    - name: Run check
+      shell: bash
+      run: |
+        if grep -r "TODO" src/; then
+          echo "You still have TODOs in your code!"
+        else
+          echo "Code is clean of TODOs."
+        fi
