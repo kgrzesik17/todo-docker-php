@@ -9,6 +9,8 @@ services:
       - db
     environment:
       - MYSQL_HOST=db
+    volumes:
+      - ./src:/var/www/html # dev only
 
   db:
     image: mysql:8.0
@@ -16,11 +18,11 @@ services:
     environment:
       MYSQL_DATABASE: devops_db
       MYSQL_USER: admin
-      MYSQLI_PASSWORD: admin
-      MYSQLI_ROOT_PASSWORD: admin
+      MYSQL_PASSWORD: admin
+      MYSQL_ROOT_PASSWORD: admin
     volumes:
       - db_data:/var/lib/mysql
       - ./src/init.sql:/docker-entrypoint-initdb.d/init.sql # create tables on start
 
 volumes:
-  db-data:
+  db_data:
