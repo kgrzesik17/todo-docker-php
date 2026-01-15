@@ -12,6 +12,7 @@
 
     <?php
       function addTask ($taskTitle, $link) {
+        $id = mysqli_real_escape_string($link, $id);
         $sql = "INSERT INTO tasks (title) VALUES ('$taskTitle') ";
         mysqli_query($link, $sql);
 
@@ -47,6 +48,7 @@
       }
 
       function deleteTask($id, $link) {
+        $id = mysqli_real_escape_string($link, $id);
         $sql = "DELETE FROM tasks WHERE id = '$id'";
         mysqli_query($link, $sql);
 
