@@ -8,11 +8,16 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <?php include 'connect.php'; ?>
+    <?php require 'connect.php'; ?>
 
     <?php
+      function addTask ($taskTitle, $link) {
+        $sql = "INSERT INTO tasks (title) VALUES ('$taskTitle') ";
+        mysqli_query($link, $sql);
+      }
+
       if(isset($_POST['title'])) {
-        echo $_POST['title'];
+        addTask($_POST['title'], $link);
       }
     ?>
 
