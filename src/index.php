@@ -12,11 +12,16 @@
 
     <?php
       function addTask ($taskTitle, $link) {
-        $id = mysqli_real_escape_string($link, $id);
-        $sql = "INSERT INTO tasks (title) VALUES ('$taskTitle') ";
-        mysqli_query($link, $sql);
+        $taskTitle = mysqli_real_escape_string($link, trim($taskTitle));
 
-        return true;
+        if(strlen($taskTitle) > 0) {
+          $sql = "INSERT INTO tasks (title) VALUES ('$taskTitle') ";
+          mysqli_query($link, $sql);
+
+          return true;
+        }
+
+        return false;
       }
 
       function getTasks($link, $done = false) {
@@ -56,9 +61,7 @@
       }
 
       if(isset($_POST['title'])) {
-        if(strlen($_POST['title']) > 0) {
-          addTask($_POST['title'], $link);
-        }
+        addTask($_POST['title'], $link);
       }
 
       if(isset($_POST['move-task'])) {
@@ -87,7 +90,7 @@
           <?php
             foreach(getTasks($link) as $task) {
               echo '<form class="task" action="" method="post">';
-              echo "<p>$task[1]</p>";
+              echo "<p> . htmlspecialchars($task[1]) . </p>";
               echo "<input type=\"hidden\" name=\"task_id\" value=\"$task[0]\">";
               echo '<button type="submit" name="move-task">-</button>';
               echo '</form>';
@@ -101,7 +104,7 @@
           <?php
             foreach(getTasks($link, true) as $task) {
               echo '<form class="task tasks-done" action="" method="post">';
-              echo "<p>$task[1]</p>";
+              echo "<p> . htmlspecialchars($task[1]) . </p>";
               echo "<input type=\"hidden\" name=\"task_id\" value=\"$task[0]\">";
               echo '<div class="task-done-buttons">';
               echo '<button type="submit" name="move-task">+</button>';
