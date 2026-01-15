@@ -38,6 +38,7 @@
       }
 
       function moveTask($id, $link) {
+        $id = mysqli_real_escape_string($link, $id);
         $checkIsDoneSql = "SELECT is_done FROM tasks WHERE id = $id";
         $checkIsDone = mysqli_fetch_assoc(mysqli_query($link, $checkIsDoneSql))['is_done'];
 
@@ -90,7 +91,7 @@
           <?php
             foreach(getTasks($link) as $task) {
               echo '<form class="task" action="" method="post">';
-              echo "<p> . htmlspecialchars($task[1]) . </p>";
+              echo "<p>" . htmlspecialchars($task[1]) . "</p>";
               echo "<input type=\"hidden\" name=\"task_id\" value=\"$task[0]\">";
               echo '<button type="submit" name="move-task">-</button>';
               echo '</form>';
@@ -104,7 +105,7 @@
           <?php
             foreach(getTasks($link, true) as $task) {
               echo '<form class="task tasks-done" action="" method="post">';
-              echo "<p> . htmlspecialchars($task[1]) . </p>";
+              echo "<p>" . htmlspecialchars($task[1]) . "</p>";
               echo "<input type=\"hidden\" name=\"task_id\" value=\"$task[0]\">";
               echo '<div class="task-done-buttons">';
               echo '<button type="submit" name="move-task">+</button>';
