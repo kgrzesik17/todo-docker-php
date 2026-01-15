@@ -1,0 +1,13 @@
+name: Reusable Linting
+
+on:
+  workflow_call:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: PHP Syntax Check
+        run: find src/ -name "*.php" -exec php -l {} \;
