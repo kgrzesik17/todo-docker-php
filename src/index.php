@@ -19,6 +19,14 @@
       if(isset($_POST['title'])) {
         addTask($_POST['title'], $link);
       }
+
+      function getTasks($link) {
+        $sql = "SELECT * FROM tasks";
+        $query = mysqli_query($link, $sql);
+        $fetch = mysqli_fetch_all($query);
+
+        return $fetch;
+      }
     ?>
 
     <header>
@@ -34,15 +42,15 @@
 
         <div class="tasks">
           <h2>Do zrobienia</h2>
-          <div class="task">
-            <p>Task Title</p>
-            <button type="submit">-</button>
-          </div>
-
-          <div class="task">
-            <p>Task Title 123</p>
-            <button type="submit">-</button>
-          </div>
+          
+          <?php
+            foreach(getTasks($link) as $task) {
+              echo '<div class="task">';
+              echo "<p>$task[1]</p>";
+              echo '<button type="submit">-</button>';
+              echo '</div>';
+            }
+          ?>
         </div>
 
         <div class="tasks tasks-done">
