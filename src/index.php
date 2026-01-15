@@ -54,7 +54,9 @@
       }
 
       if(isset($_POST['title'])) {
-        addTask($_POST['title'], $link);
+        if(strlen($_POST['title']) > 0) {
+          addTask($_POST['title'], $link);
+        }
       }
 
       if(isset($_POST['move-task'])) {
