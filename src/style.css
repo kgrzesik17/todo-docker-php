@@ -106,7 +106,8 @@ h2 {
 }
 
 footer {
-  position: absolute;
+  position: fixed;
+  background-color: var(--bg-color);
   bottom: 0;
   width: 100%;
   text-align: center;

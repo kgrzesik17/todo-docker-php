@@ -34,7 +34,7 @@
       function moveTask($id, $link) {
         $checkIsDoneSql = "SELECT is_done FROM tasks WHERE id = $id";
         $checkIsDone = mysqli_fetch_assoc(mysqli_query($link, $checkIsDoneSql))['is_done'];
-        
+
         if($checkIsDone) {
           $sql = "UPDATE tasks SET is_done = FALSE WHERE id = '$id'";
         } else {
@@ -73,7 +73,7 @@
     <main>
       <div class="tasks-container">
         <form id="add-task-form" action="" method="post">
-          <input name="title" type="text" placeholder="Todo" />
+          <input name="title" type="text" placeholder="Zadanie..." />
           <button type="submit">+</button>
         </form>
 
