@@ -18,27 +18,49 @@
         return true;
       }
 
-      function getTasks($link) {
-        $sql = "SELECT * FROM tasks";
+      function getTasks($link, $done = false) {
+        if($done) {
+          $sql = "SELECT * FROM tasks WHERE is_done = TRUE";
+        } else {
+          $sql = "SELECT * FROM tasks WHERE is_done = FALSE";
+        }
+        
         $query = mysqli_query($link, $sql);
         $fetch = mysqli_fetch_all($query);
 
         return $fetch;
       }
 
-      function deleteTask($id, $link) {
-        $sql = "DELETE FROM tasks WHERE id = '$id'";
+      function moveTask($id, $link) {
+        $checkIsDoneSql = "SELECT is_done FROM tasks WHERE id = $id";
+        $checkIsDone = mysqli_fetch_assoc(mysqli_query($link, $checkIsDoneSql))['is_done'];
+
+        echo $checkIsDone;
+
+        if($checkIsDone) {
+          $sql = "UPDATE tasks SET is_done = FALSE WHERE id = '$id'";
+        } else {
+          $sql = "UPDATE tasks SET is_done = TRUE WHERE id = '$id'";
+        }
+        
         mysqli_query($link, $sql);
 
         return true;
       }
 
+      // function deleteTask($id, $link) {
+      //   $sql = "DELETE FROM tasks WHERE id = '$id'";
+      //   mysqli_query($link, $sql);
+
+      //   return true;
+      // }
+
       if(isset($_POST['title'])) {
         addTask($_POST['title'], $link);
       }
 
-      if(isset($_POST['delete-task'])) {
-        deleteTask($_POST['task_id'], $link);
+      if(isset($_POST['move-task'])) {
+        moveTask($_POST['task_id'], $link);
       }
     ?>
 
@@ -61,7 +83,7 @@
               echo '<form class="task" action="" method="post">';
               echo "<p>$task[1]</p>";
               echo "<input type=\"hidden\" name=\"task_id\" value=\"$task[0]\">";
-              echo '<button type="submit" name="delete-task">-</button>';
+              echo '<button type="submit" name="move-task">-</button>';
               echo '</form>';
             }
           ?>
@@ -69,15 +91,16 @@
 
         <div class="tasks tasks-done">
           <h2>Zrobione</h2>
-          <div class="task tasks-done">
-            <p>Task Title</p>
-            <button type="submit">+</button>
-          </div>
 
-          <div class="task tasks-done">
-            <p>Task Title 123</p>
-            <button type="submit">+</button>
-          </div>
+          <?php
+            foreach(getTasks($link, true) as $task) {
+              echo '<form class="task tasks-done" action="" method="post">';
+              echo "<p>$task[1]</p>";
+              echo "<input type=\"hidden\" name=\"task_id\" value=\"$task[0]\">";
+              echo '<button type="submit" name="move-task">+</button>';
+              echo '</form>';
+            }
+          ?>
         </div>
       </div>
     </main>
